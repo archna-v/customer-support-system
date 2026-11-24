@@ -14,7 +14,7 @@ class UserRegister(BaseModel):
         max_length=72
     )
 
-    role: str = "Customer"
+
 
 
 class UserLogin(BaseModel):

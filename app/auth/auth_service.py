@@ -1,12 +1,18 @@
-from datetime import datetime, timedelta, timezone
+import os
+from dotenv import load_dotenv
 
+from datetime import datetime, timedelta, timezone
 from jose import jwt
 from passlib.context import CryptContext
-
 from app.database.mongodb import users_collection
 
+load_dotenv()
 
-SECRET_KEY = "customer-support-secret-key-change-later"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY is not set in environment variables")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -63,7 +69,7 @@ def register_user(user):
     user_data = {
         "username": user.username,
         "password": hashed_password,
-        "role": user.role,
+        "role": "Customer",
         "created_at": datetime.now(timezone.utc)
     }
 
